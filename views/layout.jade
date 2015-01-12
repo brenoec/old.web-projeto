@@ -1,7 +1,25 @@
 doctype html
 html
   head
-    title= title
+    script(src='/javascripts/session.js')
+
     link(rel='stylesheet', href='/stylesheets/style.css')
+
+    title= title
+
   body
+    .menu
+      ul
+        li Domorrow
+        li Help
+        li Contact
+
+    .profile
+      ul
+        li My profile
+        li Sign out
+
+    if (error)
+      span #{error}
+
     block content

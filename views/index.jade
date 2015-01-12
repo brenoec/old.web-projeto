@@ -3,3 +3,59 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  h2 Sign In
+
+  div
+    form(action = '/', method = 'post', name = 'sign in')
+      label(for = 'signInEmail') E-mail
+      br
+      input(id = 'signInEmail', type = 'email', name = 'email', value = '',
+        placeholder = 'example@email.com',
+        required)
+      br
+      br
+
+      label(for = 'signInPassword') Password
+      br
+      input(id = 'signInPassword', type = 'password', name = 'password', value = '',
+        pattern=".{2,}", title="8 characters minimum",
+        required)
+      br
+
+      input(id = 'type', type = 'hidden', value = 'sign in', name = 'type')
+
+      input(type = 'submit', value = 'Sign in', data-transition = 'fade', data-theme = 'c')
+
+  h2 Register
+
+  div
+    form(action = '/', method = 'post', name = 'register')
+      label(for = 'registerEmail') E-mail
+      br
+      input(id = 'registerEmail', name = 'email', type = 'email', value = '',
+        placeholder = 'example@email.com',
+        required)
+      br
+      br
+
+      label(for = 'registerPassword') Password
+      br
+      input(id = 'registerPassword', type = 'password', name = 'password', value = '',
+        pattern=".{2,}", title="8 characters minimum",
+        required)
+      br
+
+      label(for = 'passwordConfirmation') Confirm your password
+      br
+      input(id = 'passwordConfirmation', type = 'password', name = 'passwordConfirmation', value = '',
+        pattern=".{2,}", title="8 characters minimum",
+        required)
+      span(id = 'passwordConfirmationMessage') Passwords do not match!
+      br
+
+      input(id = 'type', type = 'hidden', value = 'register', name = 'type')
+
+      input(type = 'submit', value = 'Register', data-transition = 'fade', data-theme = 'c')
+
+  script(src='/javascripts/register.js')
