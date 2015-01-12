@@ -17,7 +17,8 @@ html
     .profile
       ul
         li My profile
-        li Sign out
+        li
+          a(href='/signout') Sign out
 
     if (error)
       span #{error}

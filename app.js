@@ -15,6 +15,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
+var signout = require('./routes/signout');
 var start = require('./routes/start');
 var users = require('./routes/users');
 
@@ -75,6 +76,7 @@ app.get('*', function(req, res, next) {
 });
 
 app.use('/', routes);
+app.use('/signout', signout);
 app.use('/start', start);
 app.use('/users', users);
 
