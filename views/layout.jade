@@ -10,17 +10,28 @@ html
   body
     .menu
       ul
-        li Domorrow
-        li Help
-        li Contact
+        li
+          a(href='/') Domorrow
+        li
+          a(href='/help') Help
+        li
+          a(href='mailto:domorrow@outlook.com') Contact
 
     .profile
       ul
-        li My profile
-        li
+        li(id = 'signout')
           a(href='/signout') Sign out
 
     if (error)
       span #{error}
+
+    script(type='text/javascript').
+      window.sessionStorage['active'] = '#{active}';
+
+      if (!window.sessionStorage['active']) {
+        document.getElementById('signout').style.visibility = "hidden";
+      } else {
+        document.getElementById('signout').style.visibility = "visible";
+      }
 
     block content

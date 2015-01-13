@@ -18,6 +18,7 @@ var routes = require('./routes/index');
 var signout = require('./routes/signout');
 var start = require('./routes/start');
 var users = require('./routes/users');
+var help = require('./routes/help');
 
 // connects to mongodb
 var mongoose = require('mongoose');
@@ -60,6 +61,12 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('*', function(req, res, next) {
+  // allows help page with http
+  if (req.url === '/help') {
+    next();
+    return;
+  }
+
   // force https
   if (req.connection.encrypted === undefined) {
     res.redirect('https://' + req.headers.host + req.url);
@@ -79,6 +86,7 @@ app.use('/', routes);
 app.use('/signout', signout);
 app.use('/start', start);
 app.use('/users', users);
+app.use('/help', help);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

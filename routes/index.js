@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
   var message = req.session.error;
   req.session.error = '';
 
-  res.render('index', { title: 'Domorrow', error: message });
+  res.render('index', { title: 'Domorrow', error: message, active: req.session.active });
 });
 
 /* POST home page */
@@ -31,7 +31,7 @@ router.post('/', function(req, res) {
         Accounts.findOne({ 'email': form.email }, function(err, data) {
           if (data) {
             req.session.error = 'E-mail has already been registered.'
-            res.redirect(409, 'start');
+            res.redirect('start');
           } else {
             chain.shift()();
           }
