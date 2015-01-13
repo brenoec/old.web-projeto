@@ -1,5 +1,40 @@
 extends layout
 
 block content
+  mixin RenderTasks(tasks)
+    each task in tasks
+      div.
+        #{task.context} #{task.title} #{task.dueDateString}
+
   h1= title
   p Welcome to #{title}
+
+  h2 Create new Task
+
+  div
+    form(action = '/start', method = 'post', name = 'create task')
+      label(for = 'context') Context
+      br
+      input(id = 'context', type = 'text', name = 'context', value = '',
+        required)
+      br
+
+      label(for = 'title') Title
+      br
+      input(id = 'title', type = 'text', name = 'title', value = '',
+        required)
+      br
+      br
+
+      label(for = 'dueDate') Due date
+      br
+      input(id = 'dueDate', type = 'date', name = 'dueDate', value = '',
+        required)
+      br
+      br
+
+      input(type = 'submit', value = 'Create task', data-transition = 'fade', data-theme = 'c')
+
+  h2 Tasks
+
+  +RenderTasks(tasks)
