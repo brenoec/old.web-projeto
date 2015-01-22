@@ -62,7 +62,7 @@ app.use(cookieParser(''));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.all('*', function(req, res, next) {
+app.all('*', function(req, res, next) {
   // allows help page with http
 //  if (req.url === '/help') {
 //    next();
@@ -75,14 +75,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 //  }
 
   // verify session
-//  if (!req.session.active && req.url !== '/') {
-//    res.redirect('https://' + req.headers.host + '/');
-//  } else if (req.session.active && req.url === '/') {
-//    res.redirect('https://' + req.headers.host + '/start');
-//  } else {
-//    next();
-//  }
-//});
+  if (!req.session.active && req.url !== '/') {
+    res.redirect('https://' + req.headers.host + '/');
+  } else if (req.session.active && req.url === '/') {
+    res.redirect('https://' + req.headers.host + '/start');
+  } else {
+    next();
+  }
+});
 
 app.use('/', routes);
 app.use('/signout', signout);
