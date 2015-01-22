@@ -35,8 +35,6 @@ db.once('open', function callback () {
 });
 
 var app = express();
-
-//app.set('port', process.env.PORT || 443);
 //http.createServer(app).listen(80);
 //https.createServer(credentials, app).listen(443);
 
@@ -72,6 +70,10 @@ app.all('*', function(req, res, next) {
 //  if (req.connection.encrypted === undefined) {
 //    res.redirect('https://' + req.headers.host + '/');
 //  }
+
+  if(req.headers['x-forwarded-proto'] != 'https') {
+    res.redirect('https://' + req.headers.host + req.url)
+  }
 
   // verify session
   if (!req.session.active && req.url !== '/') {
