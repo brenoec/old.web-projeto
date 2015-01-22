@@ -36,8 +36,9 @@ db.once('open', function callback () {
 
 var app = express();
 
-http.createServer(app).listen(80);
-https.createServer(credentials, app).listen(443);
+app.set('port', process.env.PORT || 3000);
+//http.createServer(app).listen(80);
+//https.createServer(credentials, app).listen(443);
 
 // trust first proxy
 app.set('trust proxy', 1);
