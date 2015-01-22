@@ -66,12 +66,11 @@ app.all('*', function(req, res, next) {
   // allows help page with http
   if (req.url === '/help') {
     next();
-    return;
   }
 
   // force https
   if (req.connection.encrypted === undefined) {
-    res.redirect('https://' + req.headers.host + '');
+    res.redirect('https://' + req.headers.host + '/');
   }
 
   // verify session
