@@ -64,15 +64,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.all('*', function(req, res, next) {
   // allows help page with http
-//  if (req.url === '/help') {
-//    next();
-//    return;
-//  }
+  if (req.url === '/help') {
+    next();
+    return;
+  }
 
   // force https
-//  if (req.connection.encrypted === undefined) {
-//    res.redirect('https://' + req.headers.host + req.url);
-//  }
+  if (req.connection.encrypted === undefined) {
+    res.redirect('https://' + req.headers.host + req.url);
+  }
 
   // verify session
   if (!req.session.active && req.url !== '/') {
