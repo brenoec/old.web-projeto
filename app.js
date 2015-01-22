@@ -3,7 +3,7 @@ var http= require('http');
 var https = require('https');
 var privateKey  = fs.readFileSync('ssl/server.key', 'utf8');
 var certificate = fs.readFileSync('ssl/server.crt', 'utf8');
-var credentials = {key: privateKey, cert: certificate};
+var credentials = { key: privateKey, cert: certificate };
 
 var express = require('express');
 var session = require('express-session');
@@ -62,27 +62,27 @@ app.use(cookieParser(''));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.all('*', function(req, res, next) {
+//app.all('*', function(req, res, next) {
   // allows help page with http
-  if (req.url === '/help') {
-    next();
-    return;
-  }
+//  if (req.url === '/help') {
+//    next();
+//    return;
+//  }
 
   // force https
-  if (req.connection.encrypted === undefined) {
-    res.redirect('https://' + req.headers.host + req.url);
-  }
+//  if (req.connection.encrypted === undefined) {
+//    res.redirect('https://' + req.headers.host + req.url);
+//  }
 
   // verify session
-  if (!req.session.active && req.url !== '/') {
-    res.redirect('https://' + req.headers.host + '/');
-  } else if (req.session.active && req.url === '/') {
-    res.redirect('https://' + req.headers.host + '/start');
-  } else {
-    next();
-  }
-});
+//  if (!req.session.active && req.url !== '/') {
+//    res.redirect('https://' + req.headers.host + '/');
+//  } else if (req.session.active && req.url === '/') {
+//    res.redirect('https://' + req.headers.host + '/start');
+//  } else {
+//    next();
+//  }
+//});
 
 app.use('/', routes);
 app.use('/signout', signout);
