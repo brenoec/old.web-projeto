@@ -62,22 +62,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('httpssec', 0);
 
-app.all('*', function(req, res, next) {
-  // allows help page with http
-  if (req.url === '/help') {
-    next();
-  }
+app.use('*', function(req, res, next) {
 
-  // force https
-//  if (req.connection.encrypted === undefined) {
-//    res.redirect('https://' + req.headers.host + '/');
-//  }
-  if (req.connection.encrypted === undefined) {
-    res.render('help', { title: 'Domorrow' });
+  if(req.headers['x-forwarded-proto'] != 'https') {
+    return res.redirect(['https://', req.get('Host'), req.url].join(''));
   }
 
   // verify session
-  if (!req.session.active && req.url !== '/') {
+  else if (!req.session.active && req.url !== '/') {
     res.redirect('https://' + req.headers.host + '/');
   } else if (req.session.active && req.url === '/') {
     res.redirect('https://' + req.headers.host + '/start');
@@ -85,6 +77,15 @@ app.all('*', function(req, res, next) {
     next();
   }
 });
+
+//app.all('*', function(req, res, next) {
+  // force https
+//  if (req.connection.encrypted === undefined) {
+//    res.redirect('https://' + req.headers.host + '/');
+//  }
+
+
+//});
 
 app.use('/', routes);
 app.use('/signout', signout);
