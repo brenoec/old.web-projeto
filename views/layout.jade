@@ -16,13 +16,10 @@ html
           a(href='/help') Help
         li
           a(href='mailto:domorrow@outlook.com') Contact
+        li(id = 'signout')
+          a(href='/signout') Sign out
 
     .content
-      .profile
-        ul
-          li(id = 'signout')
-            a(href='/signout') Sign out
-
       if (error)
         span #{error}
 
