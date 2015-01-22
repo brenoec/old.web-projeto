@@ -14,6 +14,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var minify = require('express-minify');
+
+
 var routes = require('./routes/index');
 var signout = require('./routes/signout');
 var start = require('./routes/start');
@@ -47,6 +50,15 @@ app.use(session({
   saveUninitialized: true
 }));
 
+app.use(minify());
+app.use(minify(
+{
+    js_match: /javascript/,
+    css_match: /stylesheets/,
+    stylus_match: /stylesheets/,
+    cache: false
+}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -62,25 +74,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('httpssec', 0);
 
-app.all('*', function(req, res, next) {
-  // force https
-  if(req.headers['x-forwarded-proto'] != 'https') {
-    return res.redirect('https://' + req.headers.host + req.url);
-  }
+if (app.get('env') === 'production' || undefined) {
+  app.all('*', function(req, res, next) {
+    // force https
+    if(req.headers['x-forwarded-proto'] != 'https') {
+      return res.redirect('https://' + req.headers.host + req.url);
+    }
 
-  // verify session
-  else if (!req.session.active && req.url !== '/') {
-    res.redirect('https://' + req.headers.host + '/');
-  }
-  else if (req.session.active && req.url === '/') {
-    res.redirect('https://' + req.headers.host + '/start');
-  }
+    // verify session
+    else if (!req.session.active && req.url !== '/') {
+      res.redirect('https://' + req.headers.host + '/');
+    }
+    else if (req.session.active && req.url === '/') {
+      res.redirect('https://' + req.headers.host + '/start');
+    }
 
-  // handle the request
-  else {
-    next();
-  }
-});
+    // handle the request
+    else {
+      next();
+    }
+  });
+}
 
 app.use('/', routes);
 app.use('/signout', signout);
