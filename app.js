@@ -69,9 +69,9 @@ app.all('*', function(req, res, next) {
   }
 
   // force https
-  if (req.connection.encrypted === undefined) {
-    res.redirect('https://' + req.headers.host + '/');
-  }
+//  if (req.connection.encrypted === undefined) {
+//    res.redirect('https://' + req.headers.host + '/');
+//  }
 
   // verify session
   if (!req.session.active && req.url !== '/') {
