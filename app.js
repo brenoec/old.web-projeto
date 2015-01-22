@@ -60,6 +60,8 @@ app.use(cookieParser(''));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.set('httpssec', 0);
+
 app.all('*', function(req, res, next) {
   // allows help page with http
   if (req.url === '/help') {
@@ -71,8 +73,9 @@ app.all('*', function(req, res, next) {
 //    res.redirect('https://' + req.headers.host + '/');
 //  }
 
-  if(req.headers['x-forwarded-proto'] != 'https') {
-    res.redirect('https://' + req.headers.host + req.url)
+  if(app.get('httpssec') === 0) {
+    res.redirect('https://' + req.headers.host + req.url);
+    app.set('httpssec', 1);
   }
 
   // verify session
