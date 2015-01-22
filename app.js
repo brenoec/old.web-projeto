@@ -62,30 +62,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('httpssec', 0);
 
-app.use('*', function(req, res, next) {
-
+app.all('*', function(req, res, next) {
+  // force https
   if(req.headers['x-forwarded-proto'] != 'https') {
-    return res.redirect(['https://', req.get('Host'), req.url].join(''));
+    return res.redirect('https://' + req.headers.host + req.url);
   }
 
   // verify session
   else if (!req.session.active && req.url !== '/') {
     res.redirect('https://' + req.headers.host + '/');
-  } else if (req.session.active && req.url === '/') {
+  }
+  else if (req.session.active && req.url === '/') {
     res.redirect('https://' + req.headers.host + '/start');
-  } else {
+  }
+
+  // handle the request
+  else {
     next();
   }
 });
-
-//app.all('*', function(req, res, next) {
-  // force https
-//  if (req.connection.encrypted === undefined) {
-//    res.redirect('https://' + req.headers.host + '/');
-//  }
-
-
-//});
 
 app.use('/', routes);
 app.use('/signout', signout);
