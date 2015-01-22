@@ -25,6 +25,7 @@ var mongoose = require('mongoose');
 var mongo;
 
 mongo = 'mongodb://localhost/domorrow';
+mongo = 'mongodb://dOtNkoYYXpZi:uzxksOcXbfEl@mongosoup-cont002.mongosoup.de:31558/cc_dOtNkoYYXpZi';
 mongoose.connect(mongo);
 
 var db = mongoose.connection;
