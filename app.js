@@ -36,7 +36,7 @@ db.once('open', function callback () {
 
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
+//app.set('port', process.env.PORT || 443);
 //http.createServer(app).listen(80);
 //https.createServer(credentials, app).listen(443);
 
@@ -62,7 +62,7 @@ app.use(cookieParser(''));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('*', function(req, res, next) {
+app.all('*', function(req, res, next) {
   // allows help page with http
   if (req.url === '/help') {
     next();
