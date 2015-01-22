@@ -17,21 +17,22 @@ html
         li
           a(href='mailto:domorrow@outlook.com') Contact
 
-    .profile
-      ul
-        li(id = 'signout')
-          a(href='/signout') Sign out
+    .content
+      .profile
+        ul
+          li(id = 'signout')
+            a(href='/signout') Sign out
 
-    if (error)
-      span #{error}
+      if (error)
+        span #{error}
 
-    script(type='text/javascript').
-      window.sessionStorage['active'] = '#{active}';
+      script(type='text/javascript').
+        window.sessionStorage['active'] = '#{active}';
 
-      if (!window.sessionStorage['active']) {
-        document.getElementById('signout').style.visibility = "hidden";
-      } else {
-        document.getElementById('signout').style.visibility = "visible";
-      }
+        if (!window.sessionStorage['active']) {
+          document.getElementById('signout').style.visibility = "hidden";
+        } else {
+          document.getElementById('signout').style.visibility = "visible";
+        }
 
-    block content
+      block content
