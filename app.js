@@ -72,10 +72,8 @@ app.all('*', function(req, res, next) {
 //  if (req.connection.encrypted === undefined) {
 //    res.redirect('https://' + req.headers.host + '/');
 //  }
-
-  if(app.get('httpssec') === 0) {
-    res.redirect('https://' + req.headers.host + req.url);
-    app.set('httpssec', 1);
+  if (req.connection.encrypted === undefined) {
+    res.render('help', { title: 'Domorrow' });
   }
 
   // verify session
