@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
   var chain = [
 
     function() {
-      Tasks.find({}, function (err, data) {
+      Tasks.find({ owner: req.session.email }, function (err, data) {
         tasks = data;
         chain.shift()();
       });
@@ -42,6 +42,8 @@ router.get('/', function(req, res) {
 /* POST start page. */
 router.post('/', function(req, res) {
   var task = new Task(req.body);
+
+  task.owner = req.session.email;
 
   task.save(function(err) {
     if (err) throw err;
